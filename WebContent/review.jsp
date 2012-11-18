@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
      import = "java.util.ArrayList" import="java.util.Iterator" 
-     import = "happyH.models.User"%>
-
+     import = "happyH.models.User"
+     import = "happyH.tables.RestaurantTable"
+     import = "happyH.models.Restaurant"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Sign Up</title>
+<title>Home</title>
 <meta name="keywords"
 	content="free design template, download web templates, Fresh Creativet Website, XHTML, CSS" />
 <meta name="description"
@@ -44,19 +45,26 @@ $(function(){
 					href="http://www.mycodes.net"><img
 					src="images/templatemo_icon_1.jpg" alt="Delicious" /></a>
 				<form action="http://www.mycodes.net" method="post">
+				<%if(session.getAttribute("user")!=null)
+				{
+					User user = (User)session.getAttribute("user");
+					String userName = user.getU_name();	
+					out.println(userName);} 
+					%>
+
 					<input type="text" value="SEARCH" name="q" class="field"
 						title="email" onfocus="clearText(this)" onblur="clearText(this)" />
-					<input type="submit" name="search" value="" alt="Search"
-						class="button" title="Subscribe" />
+					<!--  <input type="submit" name="search" value="" alt="Search"
+						class="button" title="Subscribe" />-->
 				</form>
 			</div>
 			<div id="templatemo_menu">
 				<ul>
 					<li><a href="firstPage.jsp" class="current">Home</a></li>
-					<li><a href="signUp.jsp">Sign Up</a></li>
+					<li><a href="signUp.jsp">SignUp</a></li>
 					<li><a href="login.jsp">Login</a></li>
-					<li><a href="viewRestaurants.jsp">View Restaurants</a></li>
-					<li><a href="http://www.mycodes.net">News &amp; Events</a></li>
+					<li><a href="viewRestaurant">Restaurants</a></li>
+					<li><a href="events.jsp">Events</a></li>
 					<li><a href="http://www.mycodes.net" class="last">Contact</a></li>
 				</ul>
 			</div>
@@ -67,48 +75,50 @@ $(function(){
 			<p>
 				<!-- End of left -->
 			</p>
-			<form name="signUpForm" method="post" action="signUp.do">
-			<table align="center" height ="300">
-			<tr>
-			<td colspan="2" align="center" ><span class="blue_title">Sign Up</span></td>
-			</tr>
-			<tr>
-					<td>ID</td>
-					<td><input name="id" type="text" size="25"/></td>
-				</tr>
+			<form name = "reviewForm" method = "post" action = "review.do">
+			<table align="center" height ="250" >
 			
+			<% 
+			if ((request.getParameter("rid")!=null)&& (session.getAttribute("user")!=null)){
+			String rid = request.getParameter("rid");
+			//RestaurantTable restaurantTable = new RestaurantTable();
+			Restaurant rest = RestaurantTable.getRestaurantById(rid); 
+			User user = (User)session.getAttribute("user");
+			String uid = user.getU_id();	
+					%>
 
 				<tr>
-					<td>Account</td>
-					<td><input name ="account" type="text" size="25" /></td>
+					<td  align="center"><span class="blue_title"><%=rest.getR_name()%></span></td>
 				</tr>
 				<tr>
-					<td>Password</td>
-					<td><input name ="password" type = "password" size="25" /></td>
-				</tr>
-				<tr>
-					<td>Confirm Password</td>
-					<td><input name = "confirmPassord" type= "password" size="25" /></td>
-				</tr>
-				<tr>
-					<td>Name</td>
-					<td><input name = "userName" type = "text" size="25" /></td>
-				</tr>
-				<tr>
-					<td>Email</td>
-					<td><input name = "email" type = "text" size="25" /></td>
-				</tr>
-				<tr>
-					<td>Preference Cuisine Type</td>
-					<td><input name = "cuisineType" type = "text" size="25" /></td>
-				</tr>
-				<tr>
-					<td align = "center" colspan = "2"><input type="submit" value="submit" />
-					<input type="reset" value="reset" /></td>
-				</tr>
-				<tr>
-				<td height = "30">
+				<td>
+				<input name = "uid" type = "text" value = <%=uid%> ></input>
+				<input name = "rid" type = "text" value = <%=rid%> ></input>
 				</td></tr>
+				<tr>
+					<td>Score     
+					<select name = "rating">
+							<option value="1">   1   </option>
+							<option value="2">   2   </option>
+							<option value="3">   3   </option>
+							<option value="4">   4   </option>
+							<option value="5">   5   </option>
+							<option value="6">   6   </option>
+							<option value="7">   7   </option>
+							<option value="8">   8   </option>
+						    <option value="9">   9   </option>
+							<option value="10">   10   </option>
+					</select></td>
+					</tr>
+					<tr>
+					<td>
+					<textarea name= "review" rows = "4" cols ="100" ></textarea></td></tr>
+					<tr> 
+					<td align= "center" >
+					<input type="submit" value="review" /> 
+					<input type = "reset" value ="reset"/>
+					</td></tr>
+					<%} %>
 			</table>
 			</form>
 			<p>

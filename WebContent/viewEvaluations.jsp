@@ -2,12 +2,12 @@
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
     import = "happyH.models.Restaurant"  import = "happyH.models.User"
-    import = "happyH.models.Location" %>
+    import = "happyH.models.EvaluationFromUser" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>View Restaurants</title>
+<title>View Reviews</title>
 <meta name="keywords"
 	content="free design template, download web templates, Fresh Creativet Website, XHTML, CSS" />
 <meta name="description"
@@ -76,60 +76,35 @@ $(function(){
 			</p>
 			
 			<table align="center" >
-			<% if (request.getAttribute("rest")!=null) { 
-			Restaurant rest = (Restaurant)request.getAttribute("rest"); %>
 			<tr>
-			<td colspan ="2" align="center">
-			 <span class="blue_title"> <%= rest.getR_name() %> </span>
-			</td>
+			<td ><h2>Restaurant</h2></td>
+			<td><h2>Rating </h2></td>
+			<td><h2>Review</h2></td>
+			<td><h2>From</h2></td>
+			<td><h2>Time</h2></td>
 			</tr>
-			<tr>
-			<td>Average Price   </td>
-			<td> $<%= rest.getAve_price() %></td>	
-			</tr>
-			<tr>
-			<td>Details </td>
-			<td> <%= rest.getR_details() %></td>
-			</tr>
-
-			<% if (request.getAttribute("locList")!=null) {
-				ArrayList<Location> locList =(ArrayList<Location>)request.getAttribute("locList");
-				Location loc;
-				for(int i=0;i<locList.size();i++)
-				{
-					loc = locList.get(i);
-					%>
-					<tr>
-					<td>
-					Location
-					</td>
-					<td>
-					<%= loc.toString() %>
-					</td>
-					</tr>
-					<% 
-				}
-			}%>
+			<%
 			
-			<form name = "viewReviewsForm" method = "post" action ="viewEvaluations.do">
-			<tr>
-			<td><input type="hidden" name = "rid" value = <%= rest.getR_id() %> ></input></td>
-			</tr>
-			<tr>
-			<td colspan="2" align= "center"> <input type = "submit" value ="View Reviews"/>
-			</td>
-			</tr>
-			</form>	
-
-			<form name ="reviewForm" method = "post" action = review.jsp>
-			<tr>
-			<td colspan="2" align ="center">
-			<input type="text" name = "rid" value = <%=rest.getR_id()%> ></input>
-		    <input type = "submit" value ="Review This Restaurant"/>
-		    </td>
-			</tr>
-			</form>
-				
+			ArrayList<EvaluationFromUser> evalist = (ArrayList<EvaluationFromUser>)request.getAttribute("evalist");
+			
+			for(int i=0;i<evalist.size();i++)
+			{
+				EvaluationFromUser eval =evalist.get(i);
+				String rid = eval.getR_id();
+				String rname = eval.getR_name();
+				String uid = eval.getU_id();
+				String uname = eval.getU_name();
+				double rating = eval.getRating();
+				String review = eval.getReview();
+				String time = eval.getE_time();
+				%>
+				<tr>
+				<td  height="43"><% out.println(rname); %> </td>
+				<td ><% out.println(rating); %> </td>
+				<td width= "600"><% out.println(review); %> </td>
+				<td ><% out.println(uname); %> </td>
+				<td ><% out.println(time); %> </td>
+				</tr>
 				<% } %>
 				
 				</table>

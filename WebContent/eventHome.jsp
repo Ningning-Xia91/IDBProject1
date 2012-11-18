@@ -2,7 +2,7 @@
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
     import = "happyH.models.Restaurant"  import = "happyH.models.User"
-    import = "happyH.models.Location" %>
+    import = "happyH.models.Event" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -76,59 +76,39 @@ $(function(){
 			</p>
 			
 			<table align="center" >
-			<% if (request.getAttribute("rest")!=null) { 
-			Restaurant rest = (Restaurant)request.getAttribute("rest"); %>
+			<% if ((request.getAttribute("event")!=null)&&(request.getAttribute("rest")!=null)) { 
+			Restaurant rest = (Restaurant)request.getAttribute("rest");
+			Event event = (Event)request.getAttribute("event");%>
 			<tr>
 			<td colspan ="2" align="center">
-			 <span class="blue_title"> <%= rest.getR_name() %> </span>
+			 <span class="blue_title"> <%= event.getEvt_title() %> </span>
 			</td>
 			</tr>
 			<tr>
-			<td>Average Price   </td>
-			<td> $<%= rest.getAve_price() %></td>	
+			<td>Start Time </td>
+			<td> <%= event.getStart_time() %></td>	
 			</tr>
 			<tr>
-			<td>Details </td>
-			<td> <%= rest.getR_details() %></td>
+			<td>End Time </td>
+			<td> <%= event.getEnd_time() %></td>
 			</tr>
-
-			<% if (request.getAttribute("locList")!=null) {
-				ArrayList<Location> locList =(ArrayList<Location>)request.getAttribute("locList");
-				Location loc;
-				for(int i=0;i<locList.size();i++)
-				{
-					loc = locList.get(i);
-					%>
-					<tr>
-					<td>
-					Location
-					</td>
-					<td>
-					<%= loc.toString() %>
-					</td>
-					</tr>
-					<% 
-				}
-			}%>
+			<tr>
+			<td>Details</td>
+			<td>
+			<%= event.getE_details() %>
+			</td></tr>
+			<tr>
+			<td>
+			Host Restaurant</td>
+			<td>
+			<%= rest.getR_name() %></td></tr>
 			
-			<form name = "viewReviewsForm" method = "post" action ="viewEvaluations.do">
+			<form name = "viewRestForm" method = "post" action ="restaurantHome.do">
 			<tr>
-			<td><input type="hidden" name = "rid" value = <%= rest.getR_id() %> ></input></td>
-			</tr>
-			<tr>
-			<td colspan="2" align= "center"> <input type = "submit" value ="View Reviews"/>
-			</td>
-			</tr>
+			<td colspan="2" align="center">
+			<input type="text" name = "id" value = <%= rest.getR_id() %> ></input>
+			<input type="submit" value = "See The Restaurant" ></input></td></tr>
 			</form>	
-
-			<form name ="reviewForm" method = "post" action = review.jsp>
-			<tr>
-			<td colspan="2" align ="center">
-			<input type="text" name = "rid" value = <%=rest.getR_id()%> ></input>
-		    <input type = "submit" value ="Review This Restaurant"/>
-		    </td>
-			</tr>
-			</form>
 				
 				<% } %>
 				

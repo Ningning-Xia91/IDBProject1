@@ -1,9 +1,14 @@
 package happyH.servlets;
 
-import happyH.models.User;
-import happyH.tables.UserTable;
+import happyH.models.Event;
+import happyH.models.Location;
+import happyH.models.Restaurant;
+import happyH.tables.EventTable;
+import happyH.tables.LocationTable;
+import happyH.tables.RestaurantTable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,34 +16,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginServlet extends HttpServlet {
+public class EventHomeServlet  extends HttpServlet {
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String account = request.getParameter("account");
-		String password = request.getParameter("password");
-		User user = null;
-		if (account!=null)
-		{
-			user = UserTable.getUserByAccount(account);
-			if(!password.equals(user.getU_password()))
-			{
-				System.out.println(password);
-				System.out.println(user.getU_password());
-				user=null;
-				
-			}
-		}
-		else
-		{
-			throw new ServletException("user was not specified");
-		}
+		String e_id = request.getParameter("id");
+		Event event = null;
+		Restaurant rest = null;
 		
-		if(user != null){
-			System.out.println("user");
+		event = EventTable.getEventByEid(e_id);
+		if(event != null){
 			try {
-				request.setAttribute("user",user);
-			    request.getSession().setAttribute("user", user);
-				RequestDispatcher view = request.getRequestDispatcher("/firstPage.jsp");
+				String r_id = event.getR_id();
+				rest = RestaurantTable.getRestaurantById(r_id);
+				if(rest!=null)
+				{
+					request.setAttribute("event", event);
+					request.setAttribute("rest", rest);
+				}
+				RequestDispatcher view = request.getRequestDispatcher("/eventHome.jsp");
 				view.forward(request,response);
 			} catch (Exception e) {
 				e.printStackTrace();

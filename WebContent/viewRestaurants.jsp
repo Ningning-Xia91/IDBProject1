@@ -74,7 +74,7 @@ $(function(){
 				<!-- End of left -->
 			</p>
 			
-			<table align="center" >
+			<table align="center" height ="300">
 			<tr>
 			<td ><h2>Restaurant Name</h2></td>
 			<td><h2>Details</h2></td>
@@ -103,7 +103,10 @@ $(function(){
 				<td> <input type = "hidden" name ="id" value = <% out.println(id);%>/></td>
 				</tr>
 				</form>
+				<tr>
 				<% } %>
+				
+				
 				
 				</table>
 			

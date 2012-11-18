@@ -68,22 +68,25 @@ $(function(){
 				<!-- End of left -->
 			</p>
 			<form name="loginForm" method="post" action="login.do">
-			<table align="center">
+			<table align="center" height="300">
 			<tr>
-			<td colspan="2" align="center" ><span class="blue_title">Login</span></td>
+			<td  colspan="2" align="center" ><span class="blue_title">Login</span></td>
 			</tr>
 				<tr>
-					<td>Account</td>
+					<td >Account</td>
 					<td><input name ="account" type="text" size="25" /></td>
 				</tr>
 				<tr>
-					<td>Password</td>
+					<td >Password</td>
 					<td><input name ="password" type = "password" size="25" /></td>
 				</tr>
 				<tr>
 					<td align = "center" colspan="2"><input type="submit" value="login" />
 					<input type="reset" value="reset" /></td>
 				</tr>
+				<tr>
+				<td height="150">
+				</td></tr>
 			</table>
 			</form>
 			<p>

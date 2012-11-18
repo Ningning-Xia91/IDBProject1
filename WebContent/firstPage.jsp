@@ -47,7 +47,8 @@ $(function(){
 				{
 					User user = (User)session.getAttribute("user");
 					String userName = user.getU_name();	
-					out.println(userName);} 
+					out.println(userName);
+					} 
 					%>
 
 					<input type="text" value="SEARCH" name="q" class="field"
@@ -62,8 +63,8 @@ $(function(){
 					<li><a href="signUp.jsp">SignUp</a></li>
 					<li><a href="login.jsp">Login</a></li>
 					<li><a href="viewRestaurant">Restaurants</a></li>
-					<li><a href="events.jsp">Events</a></li>
-					<li><a href="http://www.mycodes.net" class="last">Contact</a></li>
+					<li><a href="viewEvent">Events</a></li>
+					<li><a href="" class="last">Search</a></li>
 				</ul>
 			</div>
 			<!-- end of menu -->
@@ -74,7 +75,7 @@ $(function(){
 				<!-- End of left -->
 			</p>
 			
-			<table align="center" height ="250" >
+			<table align="center" height ="300" >
 			</table>
 			
 			<p>
