@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
-    import = "happyH.models.Event"  import = "happyH.models.User"%>
+    import = "happyH.models.User"
+    import = "happyH.models.Special"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>View events</title>
+<title>View specials</title>
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -66,7 +67,7 @@ $(function(){
 					<li><a href="firstPage.jsp" class="current">Home</a></li>	
 					<li><a href="viewRestaurant">Restaurants</a></li>
 					<li><a href="viewEvent">Events</a></li>
-					<li><a href="viewCuisine">Cuisine Types</a></li>
+					<li><a href="viewSpecial">Special Types</a></li>
 					<li><a href="search.jsp" class="last">Search</a></li>
 					<%if(session.getAttribute("user")!=null)
 					{%>
@@ -85,38 +86,38 @@ $(function(){
 			</p>
 			
 			<table align="center" height ="300">
+			<% if (request.getAttribute("specialList")!=null)
+				{%>
 			<tr>
-			<td height="50" ><h2>Event</h2></td>
-			<td><h2>Start Time</h2></td>
-			<td><h2>End Time</h2></td>
+			<td align = "center" colspan = "3">
+			<span class = "blue_title" ><%= String.valueOf(request.getAttribute("rname")) %></span></td></tr>
+			<tr>
+			<td ><h2>Specials</h2></td>
+			<td><h2>Details</h2></td>
+			<td>
+			<h2>Price</h2></td>
 			
 			</tr>
 			<%
 			
-			ArrayList<Event> eventList = (ArrayList<Event>)request.getAttribute("eventList");
+			ArrayList<Special> specialList = (ArrayList<Special>)request.getAttribute("specialList");
 			
-			for(int i=0;i<eventList.size();i++)
+			for(int i=0;i<specialList.size();i++)
 			{
-				Event event =eventList.get(i);
-				String rid = event.getR_id();
-				String eid = event.getEvt_id();
-				String title = event.getEvt_title();
-				String stime = event.getStart_time();
-				String etime = event.getEnd_time();
-
+				Special special =specialList.get(i);
+				String sname = special.getSc_name();
+				String sdetails = special.getSc_details();
+				int sprice = special.getSc_price();
 				%>
-				<form name = "<%=eid %>" method = "post" action ="eventHome.do">
-				<tr>
-				<td  height="43"><% out.println(title); %> </td>
-				<td  width = "27%"><% out.println(stime); %> </td>
-				<td width = "27%"><% out.println(etime); %> </td>
-				<td><input type = "submit" value ="view "/></td>
-				<td> <input type = "hidden" name ="id" value = <% out.println(eid);%>/></td>
+				<tr><td >
+				<%=sname %> </td>
+				<td ><%= sdetails%> </td>
+				<td><%= sprice %></td>
 				</tr>
-				</form>
+				<% } 
+				}%>
 				<tr>
-				<% } %>
-				
+				<td height = "50"></td></tr>
 				
 				
 				</table>

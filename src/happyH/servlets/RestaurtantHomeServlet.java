@@ -1,7 +1,9 @@
 package happyH.servlets;
 
+import happyH.models.Cuisine;
 import happyH.models.Location;
 import happyH.models.Restaurant;
+import happyH.tables.CuisineTable;
 import happyH.tables.LocationTable;
 import happyH.tables.RestaurantTable;
 
@@ -21,14 +23,19 @@ public class RestaurtantHomeServlet  extends HttpServlet {
 		String r_id = request.getParameter("id");
 		Restaurant rest = null;
 		ArrayList<Location> locList = new ArrayList<Location>();
+		Cuisine cuisine = null;
 		
 		rest = RestaurantTable.getRestaurantById(r_id);
 		locList = LocationTable.getlocationByRID(r_id);
-		if(rest != null){
+		cuisine = CuisineTable.getCuisineByCid(rest.getCt_id());
+		if(rest!= null){
 			try {
 				request.setAttribute("rest",rest);
 				if(locList !=null){
 					request.setAttribute("locList", locList);
+				}
+				if(cuisine!=null){
+					request.setAttribute("cuisine", cuisine);
 				}
 				RequestDispatcher view = request.getRequestDispatcher("/restaurantHome.jsp");
 				view.forward(request,response);

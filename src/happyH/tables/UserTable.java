@@ -20,8 +20,6 @@ public class UserTable {
 	public final static String PASSWORD = "u_password";
 	public final static String PREFERENCE_TYPE = "pref_type";
 
-	private static List<User> userList = new ArrayList<User>();
-
 	public static void insertOneUser(User user) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = null;
@@ -92,9 +90,47 @@ public class UserTable {
 		}
 		return null;
 	}
+	
+
+	public static int getMaxUserID() {
+		String sql = "SELECT MAX("+ID+") FROM " + TABLE_NAME;
+		
+		System.out.println(sql);
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		User user = null;
+
+		try {
+			conn = DBUtil.getConnectionFromDataSource();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			int rid = 0;
+
+			if (rs.next()) {
+				rid = Integer.parseInt(rs.getString(ID));
+			}
+			return rid;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0;
+	}
 
 
 	public static List<User> getAllUsers() {
+		List<User> userList = new ArrayList<User>();
 		String sql = "SELECT * FROM " + TABLE_NAME;
 
 		Connection conn = null;

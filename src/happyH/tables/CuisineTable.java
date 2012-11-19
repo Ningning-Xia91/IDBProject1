@@ -1,7 +1,6 @@
 package happyH.tables;
 
-import happyH.models.Event;
-import happyH.models.User;
+import happyH.models.Cuisine;
 import happyH.utils.DBUtil;
 
 import java.util.ArrayList;
@@ -11,20 +10,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EventTable {
+public class CuisineTable {
+	public final static String TABLE_NAME = "Cuisine_types";
+	public final static String CID = "ct_id";
+	public final static String CNAME = "ct_name";
+	public final static String CDETAILS = "ct_details";
 
-	public final static String TABLE_NAME = "Events";
-	public final static String EID = "evt_id";
-	public final static String RID = "r_id";
-	public final static String TITLE = "evt_title";
-	public final static String STIME = "start_time";
-	public final static String ETIME = "end_time";
-	public final static String DETAILS = "evt_details";
-
-	
-
-	public static List<Event> getAllEvents() {
-		List<Event> eventList = new ArrayList<Event>();
+	public static List<Cuisine> getAllCuisines() {
+		List<Cuisine> cuisineList = new ArrayList<Cuisine>();
+		
 		String sql = "SELECT * FROM " + TABLE_NAME;
 		System.out.println(sql);
 
@@ -38,10 +32,10 @@ public class EventTable {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Event event = constructEventFromResultSet(rs);
-				eventList.add(event);
+				Cuisine cuisine = constructCuisineFromResultSet(rs);
+				cuisineList.add(cuisine);
 			}
-			return eventList;
+			return cuisineList;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,15 +52,15 @@ public class EventTable {
 		return null;
 	}
 	
-	public static Event getEventByEid(String eid) {
-		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE "+ EID +" = '"+eid +"'";
+	public static Cuisine getCuisineByCid(String cid) {
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE "+ CID +" = '"+cid +"'";
 		
 		System.out.println(sql);
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Event event = null;
+		Cuisine cuisine = null;
 
 		try {
 			conn = DBUtil.getConnectionFromDataSource();
@@ -74,9 +68,9 @@ public class EventTable {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				event = constructEventFromResultSet(rs);		
+				cuisine = constructCuisineFromResultSet(rs);		
 			}
-			return event;
+			return cuisine;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,11 +87,11 @@ public class EventTable {
 		return null;
 	}
 	
-
-	public static List<Event> searchEventByTitle(String title) {
-		String sql = "SELECT * FROM Events WHERE UPPER(evt_title) LIKE UPPER('%"+title+"%')";
+	public static List<Cuisine> searchCuisineByName(String cname) {
+		List<Cuisine> cuisineList = new ArrayList<Cuisine>();
+		
+		String sql = "SELECT * FROM Cuisine_types WHERE UPPER(ct_name) LIKE UPPER('%"+cname+"%')";
 		System.out.println(sql);
-		List<Event> eventList = new ArrayList<Event>();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -109,10 +103,10 @@ public class EventTable {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Event event = constructEventFromResultSet(rs);
-				eventList.add(event);
+				Cuisine cuisine = constructCuisineFromResultSet(rs);
+				cuisineList.add(cuisine);
 			}
-			return eventList;
+			return cuisineList;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,17 +122,15 @@ public class EventTable {
 		}
 		return null;
 	}
+	
 
-	private static Event constructEventFromResultSet(ResultSet rs) {
+	private static Cuisine constructCuisineFromResultSet(ResultSet rs) {
 		try {
-			Event event = new Event();
-			event.setR_id(rs.getString(RID));
-			event.setEvt_id(rs.getString(EID));
-			event.setEvt_title(rs.getString(TITLE));
-			event.setStart_time(rs.getString(STIME));
-			event.setEnd_time(rs.getString(ETIME));
-			event.setE_details(rs.getString(DETAILS));
-			return event;
+			Cuisine cuisine = new Cuisine();
+			cuisine.setCt_id(rs.getString(CID));
+			cuisine.setCt_name(rs.getString(CNAME));
+			cuisine.setCt_details(rs.getString(CDETAILS));
+			return cuisine;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

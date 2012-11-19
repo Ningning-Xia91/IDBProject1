@@ -2,16 +2,13 @@
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
     import = "happyH.models.Restaurant"  import = "happyH.models.User"
-    import = "happyH.models.Location" %>
+    import = "happyH.models.Location" 
+    import = "happyH.models.Cuisine"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>View Restaurants</title>
-<meta name="keywords"
-	content="free design template, download web templates, Fresh Creativet Website, XHTML, CSS" />
-<meta name="description"
-	content="Fresh Creative - www.mycodes.net, Free XHTML CSS Design Layout" />
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -37,34 +34,48 @@ $(function(){
 				<div id="templatemo_slogan">Your Happy Hour</div>
 			</div>
 			<div id="templatemo_social">
-				<a href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_3.jpg" alt="RSS" /></a> <a
-					href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_2.jpg" alt="Twitter" /></a> <a
-					href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_1.jpg" alt="Delicious" /></a>
+				<img
+					src="images/templatemo_icon_3.jpg" alt="RSS" /><img
+					src="images/templatemo_icon_2.jpg" alt="Twitter" /><img
+					src="images/templatemo_icon_1.jpg" alt="Delicious" />
 				<form action="http://www.mycodes.net" method="post">
-				<%if(session.getAttribute("user")!=null)
+				<table>
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%if(session.getAttribute("user")==null) {%>
+				<a href="signUp.jsp">SignUp</a></li>
+					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
+		
+				<%
+				}
+				else
 				{
 					User user = (User)session.getAttribute("user");
 					String userName = user.getU_name();	
-					out.println(userName);} 
+					out.println("Welcome!   "+userName);
+					} 
 					%>
-
-					<input type="text" value="SEARCH" name="q" class="field"
+</td>
+					</tr>
+				</table>
+					<!-- <input type="text" value="SEARCH" name="q" class="field"
 						title="email" onfocus="clearText(this)" onblur="clearText(this)" />
-					<!--  <input type="submit" name="search" value="" alt="Search"
+					 <input type="submit" name="search" value="" alt="Search"
 						class="button" title="Subscribe" />-->
 				</form>
 			</div>
 			<div id="templatemo_menu">
 				<ul>
-					<li><a href="firstPage.jsp" class="current">Home</a></li>
-					<li><a href="signUp.jsp">SignUp</a></li>
-					<li><a href="login.jsp">Login</a></li>
+					<li><a href="firstPage.jsp" class="current">Home</a></li>	
 					<li><a href="viewRestaurant">Restaurants</a></li>
-					<li><a href="http://www.mycodes.net">News &amp; Events</a></li>
-					<li><a href="http://www.mycodes.net" class="last">Contact</a></li>
+					<li><a href="viewEvent">Events</a></li>
+					<li><a href="viewCuisine">Cuisine Types</a></li>
+					<li><a href="search.jsp" class="last">Search</a></li>
+					<%if(session.getAttribute("user")!=null)
+					{%>
+					<li><a href="Logout">Logout</a></li>
+					<%
+					}
+					%>
 				</ul>
 			</div>
 			<!-- end of menu -->
@@ -84,11 +95,11 @@ $(function(){
 			</td>
 			</tr>
 			<tr>
-			<td>Average Price   </td>
+			<td><h3>Average Price</h3>   </td>
 			<td> $<%= rest.getAve_price() %></td>	
 			</tr>
 			<tr>
-			<td>Details </td>
+			<td><h3>Details</h3> </td>
 			<td> <%= rest.getR_details() %></td>
 			</tr>
 
@@ -101,7 +112,7 @@ $(function(){
 					%>
 					<tr>
 					<td>
-					Location
+					<h3>Location</h3>
 					</td>
 					<td>
 					<%= loc.toString() %>
@@ -110,6 +121,32 @@ $(function(){
 					<% 
 				}
 			}%>
+			
+			<% if (request.getAttribute("cuisine")!=null) {
+				Cuisine cuisine =(Cuisine)request.getAttribute("cuisine");%>
+					<tr>
+					<td><h3>
+					Cuisine Type</h3>
+					</td>
+				
+					<td>
+					<%= cuisine.getCt_name() %>
+					
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="viewCuisine" >View All Cuisine Types</a>
+			
+				</td>
+					</tr>
+					<tr>
+					<td>
+					<h3>Speical Cuisines</h3></td>
+					<td>
+					<a href="viewSpecial?rid=<%=rest.getR_id() %>">Check Out Specials</a></td></tr>
+					<% 
+				
+			}%>
+			
+			
 			
 			<form name = "viewReviewsForm" method = "post" action ="viewEvaluations.do">
 			<tr>
@@ -124,7 +161,7 @@ $(function(){
 			<form name ="reviewForm" method = "post" action = review.jsp>
 			<tr>
 			<td colspan="2" align ="center">
-			<input type="text" name = "rid" value = <%=rest.getR_id()%> ></input>
+			<input type="hidden" name = "rid" value = <%=rest.getR_id()%> ></input>
 		    <input type = "submit" value ="Review This Restaurant"/>
 		    </td>
 			</tr>

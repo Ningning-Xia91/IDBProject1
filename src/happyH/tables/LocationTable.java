@@ -54,6 +54,45 @@ public class LocationTable {
 		}
 		return null;
 	}
+	
+
+	public static ArrayList<Location> searchLocationByStreet(String street) {
+		String sql = "SELECT * FROM Locations WHERE UPPER(street) LIKE UPPER('%"+street+"%')";
+		
+		System.out.println(sql);
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Location> locList = new ArrayList<Location>();
+		Location location = null;
+
+		try {
+			conn = DBUtil.getConnectionFromDataSource();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				location = constructlocationFromResultSet(rs);
+				locList.add(location);
+			}
+			return locList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 
 
 	private static Location constructlocationFromResultSet(ResultSet rs) {

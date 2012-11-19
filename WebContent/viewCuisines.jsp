@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
-    import = "happyH.models.Event"  import = "happyH.models.User"%>
+    import = "happyH.models.User"
+    import = "happyH.models.Cuisine"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>View events</title>
+<title>View cuisines</title>
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -84,37 +85,28 @@ $(function(){
 				<!-- End of left -->
 			</p>
 			
-			<table align="center" height ="300">
+			<table align="center" >
 			<tr>
-			<td height="50" ><h2>Event</h2></td>
-			<td><h2>Start Time</h2></td>
-			<td><h2>End Time</h2></td>
+			<td ><h2>Cuisine</h2></td>
+			<td><h2>Details</h2></td>
 			
 			</tr>
 			<%
 			
-			ArrayList<Event> eventList = (ArrayList<Event>)request.getAttribute("eventList");
+			ArrayList<Cuisine> cuisineList = (ArrayList<Cuisine>)request.getAttribute("cuisineList");
 			
-			for(int i=0;i<eventList.size();i++)
+			for(int i=0;i<cuisineList.size();i++)
 			{
-				Event event =eventList.get(i);
-				String rid = event.getR_id();
-				String eid = event.getEvt_id();
-				String title = event.getEvt_title();
-				String stime = event.getStart_time();
-				String etime = event.getEnd_time();
-
+				Cuisine cuisine =cuisineList.get(i);
+				String cid = cuisine.getCt_id();
+				String cname = cuisine.getCt_name();
+				String ct_details = cuisine.getCt_details();
 				%>
-				<form name = "<%=eid %>" method = "post" action ="eventHome.do">
-				<tr>
-				<td  height="43"><% out.println(title); %> </td>
-				<td  width = "27%"><% out.println(stime); %> </td>
-				<td width = "27%"><% out.println(etime); %> </td>
-				<td><input type = "submit" value ="view "/></td>
-				<td> <input type = "hidden" name ="id" value = <% out.println(eid);%>/></td>
+				<tr><td  width = "30%">
+				<input type = "hidden" name = "cid" value = <%=cid%> ></input>
+				<% out.println(cname); %> </td>
+				<td ><% out.println(ct_details); %> </td>
 				</tr>
-				</form>
-				<tr>
 				<% } %>
 				
 				

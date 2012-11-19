@@ -8,10 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sign Up</title>
-<meta name="keywords"
-	content="free design template, download web templates, Fresh Creativet Website, XHTML, CSS" />
-<meta name="description"
-	content="Fresh Creative - www.mycodes.net, Free XHTML CSS Design Layout" />
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -37,27 +33,48 @@ $(function(){
 				<div id="templatemo_slogan">Your Happy Hour</div>
 			</div>
 			<div id="templatemo_social">
-				<a href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_3.jpg" alt="RSS" /></a> <a
-					href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_2.jpg" alt="Twitter" /></a> <a
-					href="http://www.mycodes.net"><img
-					src="images/templatemo_icon_1.jpg" alt="Delicious" /></a>
+				<img
+					src="images/templatemo_icon_3.jpg" alt="RSS" /><img
+					src="images/templatemo_icon_2.jpg" alt="Twitter" /><img
+					src="images/templatemo_icon_1.jpg" alt="Delicious" />
 				<form action="http://www.mycodes.net" method="post">
-					<input type="text" value="SEARCH" name="q" class="field"
+				<table>
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%if(session.getAttribute("user")==null) {%>
+				<a href="signUp.jsp">SignUp</a></li>
+					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
+		
+				<%
+				}
+				else
+				{
+					User user = (User)session.getAttribute("user");
+					String userName = user.getU_name();	
+					out.println("Welcome!   "+userName);
+					} 
+					%>
+</td>
+					</tr>
+				</table>
+					<!-- <input type="text" value="SEARCH" name="q" class="field"
 						title="email" onfocus="clearText(this)" onblur="clearText(this)" />
-					<input type="submit" name="search" value="" alt="Search"
-						class="button" title="Subscribe" />
+					 <input type="submit" name="search" value="" alt="Search"
+						class="button" title="Subscribe" />-->
 				</form>
 			</div>
 			<div id="templatemo_menu">
 				<ul>
-					<li><a href="firstPage.jsp" class="current">Home</a></li>
-					<li><a href="signUp.jsp">Sign Up</a></li>
-					<li><a href="login.jsp">Login</a></li>
-					<li><a href="viewRestaurants.jsp">View Restaurants</a></li>
-					<li><a href="http://www.mycodes.net">News &amp; Events</a></li>
-					<li><a href="http://www.mycodes.net" class="last">Contact</a></li>
+					<li><a href="firstPage.jsp" class="current">Home</a></li>	
+					<li><a href="viewRestaurant">Restaurants</a></li>
+					<li><a href="viewEvent">Events</a></li>
+					<li><a href="viewCuisine">Cuisine Types</a></li>
+					<li><a href="search.jsp" class="last">Search</a></li>
+					<%if(session.getAttribute("user")!=null)
+					{%>
+					<li><a href="Logout">Logout</a></li>
+					<%
+					}
+					%>
 				</ul>
 			</div>
 			<!-- end of menu -->
@@ -72,12 +89,6 @@ $(function(){
 			<tr>
 			<td colspan="2" align="center" ><span class="blue_title">Sign Up</span></td>
 			</tr>
-			<tr>
-					<td>ID</td>
-					<td><input name="id" type="text" size="25"/></td>
-				</tr>
-			
-
 				<tr>
 					<td>Account</td>
 					<td><input name ="account" type="text" size="25" /></td>

@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class SignUpServlet extends HttpServlet {
 	
-	private static long user_id = 1001; 
+	//private static long user_id = 1001; 
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String id = request.getParameter("id");
+		String id = String.valueOf(UserTable.getMaxUserID()+1);
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
-		String confirmPassword = request.getParameter("confirmPassword");
+		//String confirmPassword = request.getParameter("confirmPassword");
 		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
 		String cuisineType = request.getParameter("cuisineType");

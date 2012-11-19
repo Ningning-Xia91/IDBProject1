@@ -6,7 +6,7 @@ public class Restaurant {
 	private String r_name;
 	private String r_details;
 	private int ave_price;
-	private int ct_id;
+	private String ct_id;
 	
 	public String getR_id() {
 		return r_id;
@@ -32,10 +32,10 @@ public class Restaurant {
 	public void setAve_price(int ave_price) {
 		this.ave_price = ave_price;
 	}
-	public int getCt_id() {
+	public String getCt_id() {
 		return ct_id;
 	}
-	public void setCt_id(int ct_id) {
+	public void setCt_id(String ct_id) {
 		this.ct_id = ct_id;
 	}
 	
