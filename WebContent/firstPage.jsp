@@ -38,7 +38,7 @@ $(function(){
 					src="images/templatemo_icon_1.jpg" alt="Delicious" />
 				<form action="http://www.mycodes.net" method="post">
 				<table>
-				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<%if(session.getAttribute("user")==null) {%>
 				<a href="signUp.jsp">Sign Up</a></li>
 					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
@@ -51,7 +51,7 @@ $(function(){
 					String userName = user.getU_name();	
 					out.println("Welcome!   "+userName); %>
 				
-					&nbsp;&nbsp;&nbsp;&nbsp;
+					
 					<a href="Logout">Logout</a>
 					
 						<% } 
@@ -74,7 +74,16 @@ $(function(){
 					<li><a href="viewRestaurant">Restaurant</a></li>
 					<li><a href="viewEvent">Event</a></li>
 					<li><a href="viewCuisine">Cuisine</a></li>
+					<%if(session.getAttribute("user")!=null)
+					{%>
 					<li><a href="recommend" >Recommendation</a></li>
+					<%
+					}
+					else {
+					%>
+					<li><a href="login.jsp" >Recommendation</a></li>
+					<%} %>
+					
 					<li><a href="search.jsp" class="last">Search</a></li>
 				<!-- <%if(session.getAttribute("user")!=null)
 					{%>
@@ -91,6 +100,10 @@ $(function(){
 
 			
 			<table align="center" height ="300" >
+			<tr>
+			<td>
+			<span class = "blue_title">
+			Welcome To HappyH!</span></td></tr>
 			</table>
 			
 			<p>

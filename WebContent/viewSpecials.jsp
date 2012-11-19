@@ -39,9 +39,9 @@ $(function(){
 					src="images/templatemo_icon_1.jpg" alt="Delicious" />
 				<form action="http://www.mycodes.net" method="post">
 				<table>
-				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<%if(session.getAttribute("user")==null) {%>
-				<a href="signUp.jsp">SignUp</a></li>
+				<a href="signUp.jsp">Sign Up</a></li>
 					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
 		
 				<%
@@ -50,8 +50,11 @@ $(function(){
 				{
 					User user = (User)session.getAttribute("user");
 					String userName = user.getU_name();	
-					out.println("Welcome!   "+userName);
-					} 
+					out.println("Welcome!   "+userName); %>
+				
+					<a href="Logout">Logout</a>
+					
+						<% } 
 					%>
 </td>
 					</tr>
@@ -64,19 +67,33 @@ $(function(){
 			</div>
 			<div id="templatemo_menu">
 				<ul>
-					<li><a href="firstPage.jsp" class="current">Home</a></li>	
-					<li><a href="viewRestaurant">Restaurants</a></li>
-					<li><a href="viewEvent">Events</a></li>
-					<li><a href="viewSpecial">Special Types</a></li>
-					<li><a href="search.jsp" class="last">Search</a></li>
+					<li><a href="firstPage.jsp" class="current">Home</a></li>
+					
+
+					
+					<li><a href="viewRestaurant">Restaurant</a></li>
+					<li><a href="viewEvent">Event</a></li>
+					<li><a href="viewCuisine">Cuisine</a></li>
 					<%if(session.getAttribute("user")!=null)
+					{%>
+					<li><a href="recommend" >Recommendation</a></li>
+					<%
+					}
+					else {
+					%>
+					<li><a href="login.jsp" >Recommendation</a></li>
+					<%} %>
+					
+					<li><a href="search.jsp" class="last">Search</a></li>
+				<!-- <%if(session.getAttribute("user")!=null)
 					{%>
 					<li><a href="Logout">Logout</a></li>
 					<%
 					}
-					%>
+					%> -->	
 				</ul>
 			</div>
+			<!-- end of menu -->
 			<!-- end of menu -->
 		</div>
 		<div id="templatemo_content_area">
@@ -89,10 +106,10 @@ $(function(){
 			<% if (request.getAttribute("specialList")!=null)
 				{%>
 			<tr>
-			<td align = "center" colspan = "3">
+			<td height = "20" align = "center" colspan = "3">
 			<span class = "blue_title" ><%= String.valueOf(request.getAttribute("rname")) %></span></td></tr>
 			<tr>
-			<td ><h2>Specials</h2></td>
+			<td  height = "20" ><h2>Specials</h2></td>
 			<td><h2>Details</h2></td>
 			<td>
 			<h2>Price</h2></td>
@@ -109,17 +126,19 @@ $(function(){
 				String sdetails = special.getSc_details();
 				int sprice = special.getSc_price();
 				%>
-				<tr><td >
+				<tr><td  height = "20" >
 				<%=sname %> </td>
 				<td ><%= sdetails%> </td>
-				<td><%= sprice %></td>
+				<td>$<%= sprice %></td>
 				</tr>
 				<% } 
 				}%>
 				<tr>
 				<td height = "50"></td></tr>
 				
-				
+				<tr>
+				<td>
+				</td></tr>
 				</table>
 			
 			<p>

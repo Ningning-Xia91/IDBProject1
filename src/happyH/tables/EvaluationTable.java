@@ -160,6 +160,54 @@ public class EvaluationTable {
 		}
 		return null;
 	}
+	
+
+	public static double getAveGradeByRID(String rid) {
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE "+ RID +" = '"+rid +"'";	
+		System.out.println(sql);
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		//ArrayList<Evaluation> evaList = new ArrayList<Evaluation>();
+		Evaluation eval = null;
+		double average = 0.0;
+		double sum = 0.0;
+		double num = 0;
+
+		try {
+			conn = DBUtil.getConnectionFromDataSource();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				eval = constructEvaluationFromResultSet(rs);
+				sum += eval.getRating();
+				num+=1;
+			}
+			if(num> 0){
+				average = sum/num;
+				return average;
+			}
+			else {
+				return 0.0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return 0.0;
+	}
+	
 
 	private static Evaluation constructEvaluationFromResultSet(ResultSet rs) {
 		try {

@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
     pageEncoding="GB18030"     
     import = "java.util.ArrayList" import="java.util.Iterator" 
-    import = "happyH.models.User"
-    import = "happyH.models.Cuisine"%>
+    import = "happyH.models.Restaurant"  import = "happyH.models.User"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>View cuisines</title>
+<title>View Restaurants</title>
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -37,7 +36,7 @@ $(function(){
 					src="images/templatemo_icon_3.jpg" alt="RSS" /><img
 					src="images/templatemo_icon_2.jpg" alt="Twitter" /><img
 					src="images/templatemo_icon_1.jpg" alt="Delicious" />
-			<form action="http://www.mycodes.net" method="post">
+				<form action="http://www.mycodes.net" method="post">
 				<table>
 				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<%if(session.getAttribute("user")==null) {%>
@@ -95,38 +94,55 @@ $(function(){
 			</div>
 			<!-- end of menu -->
 		</div>
+		
 		<div id="templatemo_content_area">
-
-			<p>
-				<!-- End of left -->
-			</p>
-			
-			<table align="center" >
+			<table align="center" height ="300">
+			<% if ((request.getAttribute("restList")==null)||
+					((ArrayList<Restaurant>)request.getAttribute("restList")).isEmpty()){%>
 			<tr>
-			<td ><h2>Cuisine</h2></td>
+			<td>
+			<h3>
+			Sorry, there is no such restaurant. </h3></td></tr>
+			
+			<% 
+			}
+			else{
+			%>
+			<tr>
+			<td height = "50"><h2>Restaurant Name</h2></td>
 			<td><h2>Details</h2></td>
+			<td><h2>Average Price</h2></td>
 			
 			</tr>
 			<%
-			
-			ArrayList<Cuisine> cuisineList = (ArrayList<Cuisine>)request.getAttribute("cuisineList");
-			
-			for(int i=0;i<cuisineList.size();i++)
+
+			ArrayList<Restaurant> restList = (ArrayList<Restaurant>)request.getAttribute("restList");
+			for(int i=0;i<restList.size();i++)
 			{
-				Cuisine cuisine =cuisineList.get(i);
-				String cid = cuisine.getCt_id();
-				String cname = cuisine.getCt_name();
-				String ct_details = cuisine.getCt_details();
+				Restaurant restaurant =restList.get(i);
+				String id = restaurant.getR_id();
+				String name = restaurant.getR_name();
+				String details = restaurant.getR_details();
+				int price = restaurant.getAve_price();
+				
 				%>
-				<tr><td  width = "30%">
-				<input type = "hidden" name = "cid" value = <%=cid%> ></input>
-				<% out.println(cname); %> </td>
-				<td ><% out.println(ct_details); %> </td>
+				<form name = <%=id %> method = "post" action ="restaurantHome.do">
+				<tr>
+				<td  height="43"><% out.println(name); %> </td>
+				<td ><% out.println(details); %> </td>
+				<td >$<% out.println(price); %> </td>
+				<td><input type = "submit" value ="view "/></td>
+				<td> <input type = "hidden" name ="id" value = <% out.println(id);%>/></td>
 				</tr>
-				<% } %>
+				</form>
+				
+				<% } 
+				}%>
 				
 				
-				
+				<tr>
+				<td>
+				</td></tr>
 				</table>
 			
 			<p>

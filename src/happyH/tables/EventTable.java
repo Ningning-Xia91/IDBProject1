@@ -25,7 +25,9 @@ public class EventTable {
 
 	public static List<Event> getAllEvents() {
 		List<Event> eventList = new ArrayList<Event>();
-		String sql = "SELECT * FROM " + TABLE_NAME;
+		String sql1 = "SELECT * FROM " + TABLE_NAME;
+		String sql = "SELECT Events.*, to_char(start_time,'yyyy-mm-dd') as stime," +
+				" to_char(end_time,'yyyy-mm-dd') as etime from Events"; 
 		System.out.println(sql);
 
 		Connection conn = null;
@@ -59,7 +61,8 @@ public class EventTable {
 	}
 	
 	public static Event getEventByEid(String eid) {
-		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE "+ EID +" = '"+eid +"'";
+		String sql = "SELECT  Events.*, to_char(start_time,'yyyy-mm-dd') as stime," +
+				" to_char(end_time,'yyyy-mm-dd') as etime FROM " + TABLE_NAME + " WHERE "+ EID +" = '"+eid +"'";
 		
 		System.out.println(sql);
 
@@ -95,7 +98,8 @@ public class EventTable {
 	
 
 	public static List<Event> searchEventByTitle(String title) {
-		String sql = "SELECT * FROM Events WHERE UPPER(evt_title) LIKE UPPER('%"+title+"%')";
+		String sql = "SELECT Events.*, to_char(start_time,'yyyy-mm-dd') as stime," +
+				" to_char(end_time,'yyyy-mm-dd') as etime FROM Events WHERE UPPER(evt_title) LIKE UPPER('%"+title+"%')";
 		System.out.println(sql);
 		List<Event> eventList = new ArrayList<Event>();
 
@@ -135,8 +139,8 @@ public class EventTable {
 			event.setR_id(rs.getString(RID));
 			event.setEvt_id(rs.getString(EID));
 			event.setEvt_title(rs.getString(TITLE));
-			event.setStart_time(rs.getString(STIME));
-			event.setEnd_time(rs.getString(ETIME));
+			event.setStart_time(rs.getString("stime"));
+			event.setEnd_time(rs.getString("etime"));
 			event.setE_details(rs.getString(DETAILS));
 			return event;
 		} catch (SQLException e) {

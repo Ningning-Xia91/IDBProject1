@@ -1,11 +1,14 @@
 package happyH.servlets;
 
 import happyH.models.Evaluation;
+import happyH.models.Restaurant;
 import happyH.tables.EvaluationTable;
+import happyH.tables.RestaurantTable;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -48,9 +51,13 @@ public class AddReviewServlet extends HttpServlet {
 		} catch (Exception e) {
 
 		}
-		
-
-		RequestDispatcher view = request.getRequestDispatcher("/firstPage.jsp");
+	
+		request.setAttribute("id", rid);
+		Restaurant rest = RestaurantTable.getRestaurantById(rid);
+		ArrayList<Restaurant> restList = new ArrayList<Restaurant>();
+		restList.add(rest);
+		request.setAttribute("restList", restList);
+		RequestDispatcher view = request.getRequestDispatcher("/viewRestaurants.jsp");
 		view.forward(request,response);
 	}
 	

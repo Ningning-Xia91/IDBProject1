@@ -6,6 +6,8 @@ public class Location {
 	private String r_id;
 	private String street;
 	private String zipcode;
+	private String area;
+	
 	public String getL_id() {
 		return l_id;
 	}
@@ -31,6 +33,12 @@ public class Location {
 		this.zipcode = zipcode;
 	}
 	
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("Street: " + street + "\n ");

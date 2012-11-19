@@ -143,7 +143,14 @@
 		<url-pattern>/viewSpecial</url-pattern>
 	</servlet-mapping>	
 	
-	
+				<servlet>
+		<servlet-name>RecommendationServlet</servlet-name>
+		<servlet-class>happyH.servlets.RecommendationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RecommendationServlet</servlet-name>
+		<url-pattern>/recommend</url-pattern>
+	</servlet-mapping>	
 	
 	<welcome-file-list>
 		<welcome-file>firstPage.html</welcome-file>

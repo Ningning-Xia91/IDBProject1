@@ -15,8 +15,10 @@ import oracle.jdbc.pool.OracleDataSource;
 
 public class DBUtil {
 	private static OracleDataSource ods;
-	private static String dbUser = "nx2120";
-	private static String dbPassword = "idbidb";
+	//private static String dbUser = "nx2120";
+	//private static String dbPassword = "idbidb";
+	private static String dbUser = "yy2429";
+	private static String dbPassword = "XnKykzSr";
 
 	public static void main(String[] args) throws Exception {
 

@@ -4,6 +4,7 @@ import happyH.models.Cuisine;
 import happyH.models.Location;
 import happyH.models.Restaurant;
 import happyH.tables.CuisineTable;
+import happyH.tables.EvaluationTable;
 import happyH.tables.LocationTable;
 import happyH.tables.RestaurantTable;
 
@@ -27,6 +28,7 @@ public class RestaurtantHomeServlet  extends HttpServlet {
 		
 		rest = RestaurantTable.getRestaurantById(r_id);
 		locList = LocationTable.getlocationByRID(r_id);
+		double average = EvaluationTable.getAveGradeByRID(r_id);
 		cuisine = CuisineTable.getCuisineByCid(rest.getCt_id());
 		if(rest!= null){
 			try {
@@ -36,6 +38,9 @@ public class RestaurtantHomeServlet  extends HttpServlet {
 				}
 				if(cuisine!=null){
 					request.setAttribute("cuisine", cuisine);
+				}
+				if(average>=0.0){
+					request.setAttribute("average", average);
 				}
 				RequestDispatcher view = request.getRequestDispatcher("/restaurantHome.jsp");
 				view.forward(request,response);

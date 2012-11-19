@@ -6,6 +6,7 @@ public class User {
 	public static final String NAME = "name";
 	public static final String EMAIL = "email";
 	public static final String ACCOUNT = "account";
+	public static final String AREA ="area";
 	public static final String PREFERENCE_TYPE = "preference_type";
 	
 	private String u_id;
@@ -14,6 +15,7 @@ public class User {
 	private String u_name;
 	private String u_email;
 	private String pref_type;
+	private String area;
 	
 	public String getU_id() {
 		return u_id;
@@ -51,7 +53,12 @@ public class User {
 	public void setPref_type(String pref_type) {
 		this.pref_type = pref_type;
 	}
-	
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
 	public String toJSON(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(" " + ID + ": " + u_id + ", ");

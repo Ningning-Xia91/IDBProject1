@@ -37,11 +37,11 @@ $(function(){
 					src="images/templatemo_icon_3.jpg" alt="RSS" /><img
 					src="images/templatemo_icon_2.jpg" alt="Twitter" /><img
 					src="images/templatemo_icon_1.jpg" alt="Delicious" />
-				<form action="http://www.mycodes.net" method="post">
+			<form action="http://www.mycodes.net" method="post">
 				<table>
-				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<%if(session.getAttribute("user")==null) {%>
-				<a href="signUp.jsp">SignUp</a></li>
+				<a href="signUp.jsp">Sign Up</a></li>
 					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
 		
 				<%
@@ -50,8 +50,11 @@ $(function(){
 				{
 					User user = (User)session.getAttribute("user");
 					String userName = user.getU_name();	
-					out.println("Welcome!   "+userName);
-					} 
+					out.println("Welcome!   "+userName); %>
+				
+					<a href="Logout">Logout</a>
+					
+						<% } 
 					%>
 </td>
 					</tr>
@@ -64,17 +67,30 @@ $(function(){
 			</div>
 			<div id="templatemo_menu">
 				<ul>
-					<li><a href="firstPage.jsp" class="current">Home</a></li>	
-					<li><a href="viewRestaurant">Restaurants</a></li>
-					<li><a href="viewEvent">Events</a></li>
-					<li><a href="viewCuisine">Cuisine Types</a></li>
-					<li><a href="search.jsp" class="last">Search</a></li>
+					<li><a href="firstPage.jsp" class="current">Home</a></li>
+					
+
+					
+					<li><a href="viewRestaurant">Restaurant</a></li>
+					<li><a href="viewEvent">Event</a></li>
+					<li><a href="viewCuisine">Cuisine</a></li>
 					<%if(session.getAttribute("user")!=null)
+					{%>
+					<li><a href="recommend" >Recommendation</a></li>
+					<%
+					}
+					else {
+					%>
+					<li><a href="login.jsp" >Recommendation</a></li>
+					<%} %>
+					
+					<li><a href="search.jsp" class="last">Search</a></li>
+				<!-- <%if(session.getAttribute("user")!=null)
 					{%>
 					<li><a href="Logout">Logout</a></li>
 					<%
 					}
-					%>
+					%> -->	
 				</ul>
 			</div>
 			<!-- end of menu -->
@@ -85,7 +101,7 @@ $(function(){
 				<!-- End of left -->
 			</p>
 			
-			<table align="center" >
+			<table align="center"  height ="300" >
 			<% if ((request.getAttribute("event")!=null)&&(request.getAttribute("rest")!=null)) { 
 			Restaurant rest = (Restaurant)request.getAttribute("rest");
 			Event event = (Event)request.getAttribute("event");%>
@@ -95,28 +111,28 @@ $(function(){
 			</td>
 			</tr>
 			<tr>
-			<td>Start Time </td>
+			<td><h3>Start Time </h3></td>
 			<td> <%= event.getStart_time() %></td>	
 			</tr>
 			<tr>
-			<td>End Time </td>
+			<td><h3>End Time</h3> </td>
 			<td> <%= event.getEnd_time() %></td>
 			</tr>
 			<tr>
-			<td>Details</td>
+			<td><h3>Details</h3></td>
 			<td>
 			<%= event.getE_details() %>
 			</td></tr>
 			<tr>
-			<td>
-			Host Restaurant</td>
+			<td><h3>
+			Host Restaurant</h3></td>
 			<td>
 			<%= rest.getR_name() %></td></tr>
 			
 			<form name = "viewRestForm" method = "post" action ="restaurantHome.do">
 			<tr>
 			<td colspan="2" align="center">
-			<input type="text" name = "id" value = <%= rest.getR_id() %> ></input>
+			<input type="hidden" name = "id" value = <%= rest.getR_id() %> ></input>
 			<input type="submit" value = "See The Restaurant" ></input></td></tr>
 			</form>	
 				

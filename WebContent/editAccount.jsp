@@ -9,13 +9,13 @@
 <SCRIPT LANGUAGE = "JavaScript">
 function check()
 {
-var account=document.signUpForm.account.value;
-var password=document.signUpForm.password.value;
-var cword=document.signUpForm.confirmPassword.value;
-var username=document.signUpForm.userName.value;
-var email=document.signUpForm.email.value;
-var cuisine=document.signUpForm.cuisineType.value;
-var area=document.signUpForm.area.value;
+var account=document.editAccountForm.account.value;
+var password=document.editAccountForm.password.value;
+var cword=document.editAccountForm.confirmPassword.value;
+var username=document.editAccountForm.userName.value;
+var email=document.editAccountForm.email.value;
+var cuisine=document.editAccountForm.cuisineType.value;
+var area=document.editAccountForm.area.value;
 
   if((account.length<3)||(account.length>16))
   {alert("The length of account should be between 3 and 16");
@@ -40,7 +40,7 @@ var area=document.signUpForm.area.value;
   
   
 
-var k=document.signUpForm.email.value;
+var k=document.editAccountForm.email.value;
 var j=0;
 var g,f;
 if(k==""){
@@ -76,7 +76,7 @@ return false;
 </SCRIPT>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Sign Up</title>
+<title>Edit Account</title>
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 <link href="fullsize/fullsize.css" media="screen" rel="stylesheet"
 	type="text/css" />
@@ -118,8 +118,9 @@ $(function(){
 				else
 				{
 					User user = (User)session.getAttribute("user");
-					String userName = user.getU_name();	
-					out.println("Welcome!   "+userName); %>
+					String userName = user.getU_name();	%>
+					"Welcome!   "
+					<a href = "eidtAccount.jsp"> <%= userName%></a>
 				
 					<a href="Logout">Logout</a>
 					
@@ -169,30 +170,34 @@ $(function(){
 			<p>
 				<!-- End of left -->
 			</p>
-			<form name="signUpForm" method="post" onsubmit="return check()"  action="signUp.do">
+			<form name="editAccountForm" method="post" onsubmit="return check()"  action="editAccount.do">
 			<table align="center" height ="300">
+			<%if(session.getAttribute("user")==null) {
+				User user = (User)session.getAttribute("user");
+			
+			%>
 			<tr>
-			<td colspan="2" align="center" ><span class="blue_title">Sign Up</span></td>
+			<td colspan="2" align="center" ><span class="blue_title">Edit Account</span></td>
 			</tr>
 				<tr>
 					<td>Account</td>
-					<td><input name ="account" type="text" size="25" /></td>
+					<td><input name ="account" type="text" size="25" value =<%= user.getU_account() %> /></td>
 				</tr>
 				<tr>
 					<td>Password</td>
-					<td><input name ="password" type = "password" size="25" /></td>
+					<td><input name ="password" type = "password" size="25" value=<%= user.getU_password() %> /></td>
 				</tr>
 				<tr>
 					<td>Confirm Password</td>
-					<td><input name = "confirmPassword" type= "password" size="25" /></td>
+					<td><input name = "confirmPassword" type= "password" size="25" value =<%= user.getU_password() %>/></td>
 				</tr>
 				<tr>
 					<td>Name</td>
-					<td><input name = "userName" type = "text" size="25" /></td>
+					<td><input name = "userName" type = "text" size="25" value = <%= user.getU_name() %> /></td>
 				</tr>
 				<tr>
 					<td>Email</td>
-					<td><input name = "email" type = "text" size="25" /></td>
+					<td><input name = "email" type = "text" size="25" value = <%= user.getU_email() %> /></td>
 				</tr>
 				<tr>
 					<td>Preference Cuisine Type</td>
@@ -231,6 +236,7 @@ $(function(){
 				<td height = "30">
 				</td></tr>
 				<tr>
+				<%} %>
 				<td colspan = "2" align="center"> <% if (request.getAttribute("SameAccount")!=null){
 					String sameAccount = String.valueOf(request.getAttribute("SameAccount"));
 					out.println(sameAccount);}%></td></tr>

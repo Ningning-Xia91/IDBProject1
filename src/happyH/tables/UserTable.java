@@ -19,13 +19,14 @@ public class UserTable {
 	public final static String ACCOUNT = "u_account";
 	public final static String PASSWORD = "u_password";
 	public final static String PREFERENCE_TYPE = "pref_type";
+	public final static String AREA= "default_area";
 
 	public static void insertOneUser(User user) {
 		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = "Insert Into " + TABLE_NAME + 
 				" ( " + ID + ", " + ACCOUNT+ ", " + PASSWORD + ", " + NAME + ", " 
-				+ EMAIL + ", "+ PREFERENCE_TYPE  + ") VALUES (?, ?, ?, ?, ?, ?)";
+				+ EMAIL + ", "+ PREFERENCE_TYPE+", "+AREA  + ") VALUES (?, ?, ?, ?, ?,?, ?)";
 		try {
 			conn.setAutoCommit(false);
 			ps = conn.prepareStatement(sql);
@@ -35,6 +36,7 @@ public class UserTable {
 			ps.setString(4, user.getU_name());
 			ps.setString(5, user.getU_email());
 			ps.setString(6, user.getPref_type());
+			ps.setString(7, user.getArea());
 			
 			ps.addBatch();
 			ps.executeBatch();
@@ -51,6 +53,40 @@ public class UserTable {
 			}
 		}
 	}
+	
+	public static void UpdateOneUser(User user) {
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement ps = null;
+		String sql = "Insert Into " + TABLE_NAME + 
+				" ( " + ID + ", " + ACCOUNT+ ", " + PASSWORD + ", " + NAME + ", " 
+				+ EMAIL + ", "+ PREFERENCE_TYPE+", "+AREA  + ") VALUES (?, ?, ?, ?, ?,?, ?)";
+		try {
+			conn.setAutoCommit(false);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, user.getU_id());
+			ps.setString(2, user.getU_account());
+			ps.setString(3, user.getU_password());
+			ps.setString(4, user.getU_name());
+			ps.setString(5, user.getU_email());
+			ps.setString(6, user.getPref_type());
+			ps.setString(7, user.getArea());
+			
+			ps.addBatch();
+			ps.executeBatch();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public static User getUserByAccount(String account) {
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE "+ ACCOUNT +" = '"+account +"'";
@@ -93,7 +129,7 @@ public class UserTable {
 	
 
 	public static int getMaxUserID() {
-		String sql = "SELECT MAX("+ID+") FROM " + TABLE_NAME;
+		String sql = "SELECT MAX("+ID+") maxid FROM " + TABLE_NAME;
 		
 		System.out.println(sql);
 
@@ -109,7 +145,8 @@ public class UserTable {
 			int rid = 0;
 
 			if (rs.next()) {
-				rid = Integer.parseInt(rs.getString(ID));
+				rid = Integer.parseInt(rs.getString("maxid"));
+				System.out.println("rs"+rid);
 			}
 			return rid;
 		} catch (SQLException e) {
@@ -172,6 +209,7 @@ public class UserTable {
 			user.setU_email(rs.getString(EMAIL));
 			user.setU_account(rs.getString(ACCOUNT));
 			user.setPref_type(rs.getString(PREFERENCE_TYPE));
+			user.setArea(rs.getString(AREA));
 			return user;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

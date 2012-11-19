@@ -38,11 +38,11 @@ $(function(){
 					src="images/templatemo_icon_3.jpg" alt="RSS" /><img
 					src="images/templatemo_icon_2.jpg" alt="Twitter" /><img
 					src="images/templatemo_icon_1.jpg" alt="Delicious" />
-				<form action="http://www.mycodes.net" method="post">
+			<form action="http://www.mycodes.net" method="post">
 				<table>
-				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<%if(session.getAttribute("user")==null) {%>
-				<a href="signUp.jsp">SignUp</a></li>
+				<a href="signUp.jsp">Sign Up</a></li>
 					 &nbsp;|&nbsp; <a href="login.jsp" class="last">Login</a></li>
 		
 				<%
@@ -51,8 +51,11 @@ $(function(){
 				{
 					User user = (User)session.getAttribute("user");
 					String userName = user.getU_name();	
-					out.println("Welcome!   "+userName);
-					} 
+					out.println("Welcome!   "+userName); %>
+				
+					<a href="Logout">Logout</a>
+					
+						<% } 
 					%>
 </td>
 					</tr>
@@ -65,17 +68,30 @@ $(function(){
 			</div>
 			<div id="templatemo_menu">
 				<ul>
-					<li><a href="firstPage.jsp" class="current">Home</a></li>	
-					<li><a href="viewRestaurant">Restaurants</a></li>
-					<li><a href="viewEvent">Events</a></li>
-					<li><a href="viewCuisine">Cuisine Types</a></li>
-					<li><a href="search.jsp" class="last">Search</a></li>
+					<li><a href="firstPage.jsp" class="current">Home</a></li>
+					
+
+					
+					<li><a href="viewRestaurant">Restaurant</a></li>
+					<li><a href="viewEvent">Event</a></li>
+					<li><a href="viewCuisine">Cuisine</a></li>
 					<%if(session.getAttribute("user")!=null)
+					{%>
+					<li><a href="recommend" >Recommendation</a></li>
+					<%
+					}
+					else {
+					%>
+					<li><a href="login.jsp" >Recommendation</a></li>
+					<%} %>
+					
+					<li><a href="search.jsp" class="last">Search</a></li>
+				<!-- <%if(session.getAttribute("user")!=null)
 					{%>
 					<li><a href="Logout">Logout</a></li>
 					<%
 					}
-					%>
+					%> -->	
 				</ul>
 			</div>
 			<!-- end of menu -->
@@ -98,6 +114,17 @@ $(function(){
 			<td><h3>Average Price</h3>   </td>
 			<td> $<%= rest.getAve_price() %></td>	
 			</tr>
+						<% if (request.getAttribute("average")!=null)  {%>
+			<tr>
+			<td>
+			<h3>Average Grade</h3>
+			</td>
+			<td>
+			<%=String.valueOf(request.getAttribute("average")) %>
+			</td>
+			</tr>
+<%} %>
+
 			<tr>
 			<td><h3>Details</h3> </td>
 			<td> <%= rest.getR_details() %></td>

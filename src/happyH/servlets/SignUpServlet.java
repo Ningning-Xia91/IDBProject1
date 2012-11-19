@@ -25,6 +25,7 @@ public class SignUpServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
 		String cuisineType = request.getParameter("cuisineType");
+		String area = request.getParameter("area");
 
 		User user = new User();
 		user.setU_id(id);
@@ -33,24 +34,32 @@ public class SignUpServlet extends HttpServlet {
 		user.setU_name(userName);
 		user.setU_email(email);
 		user.setPref_type(cuisineType);
+		user.setArea(area);
 		
 		try {
 			if (user != null) {
 				System.out.println(user.getU_id());
 				System.out.println(user.getU_account());
-				System.out.println(user.getU_email());
-				System.out.println(user.getU_password());
-				System.out.println(user.getU_name());
-				System.out.println(user.getPref_type());
+				if (UserTable.getUserByAccount(account)!=null)
+				{
+					String SameAccount = "There is a same account in our system. Please use another one.";
+					request.setAttribute("SameAccount", SameAccount);
+					RequestDispatcher view = request.getRequestDispatcher("/signUp.jsp");
+					view.forward(request,response);
+				}
+				else{
 				UserTable.insertOneUser(user);
 				System.out.println("insert a user!");
+				request.getSession().setAttribute("user", user);
+				RequestDispatcher view = request.getRequestDispatcher("/firstPage.jsp");
+				view.forward(request,response);
+				}
 			}
 		} catch (Exception e) {
 
 		}
 
-		RequestDispatcher view = request.getRequestDispatcher("/firstPage.jsp");
-		view.forward(request,response);
+
 		
 		
 	}
